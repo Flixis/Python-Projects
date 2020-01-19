@@ -10,6 +10,8 @@ stream = AnsiToWin32(sys.stderr).stream
 #import for CMD commands
 import os
 
+#Version
+Version = "1.0.0"
  
 # Check for QRnumerical to confirm int usage 
 def inputnumber(number):
@@ -51,7 +53,7 @@ def QRany():
 #Start code
 if __name__ == "__main__":
     #selection area:
-    print("QRCode generator")
+    print(Fore.LIGHTYELLOW_EX + "QRCode generator V%s\n\r" % Version + Fore.RESET , file=stream)
     print("Please choose what kind of QRcode you want to create")
     print("1:Any Value")
     print("2:Numerical only")
