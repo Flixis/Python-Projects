@@ -4,6 +4,8 @@ This is a QR generator in Python.
 ## Usage
 Windows: ```python.exe .\QR.py```
 
+Linux: ```python QR.py```
+
 ### Prerequisites
 - Python 3
 
