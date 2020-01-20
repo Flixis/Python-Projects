@@ -17,10 +17,10 @@ import argparse
 
 
 
-parser = argparse.ArgumentParser(description='Example: QR.py 1 Testing')
-parser.add_argument('Type',type=int,help='Type 1 or 2.')
-parser.add_argument('value',help="Data to encode.")
-args = parser.parse_args()
+# parser = argparse.ArgumentParser(description='Example: QR.py 1 Testing')
+# parser.add_argument('Type',type=int,help='Type 1 or 2.')
+# parser.add_argument('value',help="Data to encode.")
+# args = parser.parse_args()
 
 
 #Version and OS check
@@ -81,9 +81,7 @@ if __name__ == "__main__":
     #Make sure selection is interger otherwise error
     try:
         selection = inputnumber("")
-
-        if args.Type == 1:
-            print("hey that worked")
+        
 
         if selection == 1:
             #QR with any string
