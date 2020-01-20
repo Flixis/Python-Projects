@@ -9,14 +9,27 @@ from colorama import Fore, Back, Style, init, AnsiToWin32
 # needed for proper printing in Windows CMD
 init(wrap=False)
 stream = AnsiToWin32(sys.stderr).stream
-#import for CMD commands
+#import for OS commands
 import os
 import platform
+#import for argparse
+import argparse
 
-#Version
+
+
+parser = argparse.ArgumentParser(description='Example: QR.py 1 Testing')
+parser.add_argument('Type',type=int,help='Type 1 or 2.')
+parser.add_argument('value',help="Data to encode.")
+args = parser.parse_args()
+
+
+#Version and OS check
 SystemOS = platform.system()
 VersionOS = platform.release()
 Version = "1.0.0"
+
+
+
 
  
 # Check for QRnumerical to confirm int usage 
@@ -68,7 +81,12 @@ if __name__ == "__main__":
     #Make sure selection is interger otherwise error
     try:
         selection = inputnumber("")
+
+        if args.Type == 1:
+            print("hey that worked")
+
         if selection == 1:
+            #QR with any string
             QRany()
             #Open .svg with default app, windows only?
             if SystemOS == "Windows":
@@ -83,6 +101,7 @@ if __name__ == "__main__":
                 print(Fore.GREEN + "Module options: %r" % qr + Fore.RESET,file=stream)
                 raise MyException("Couldn't match OS in order to display QRCode.")
         else:
+            #QR with numerical only
             QRnumerical()
             #Open .svg with default app, windows only?
             if SystemOS == "Windows":
