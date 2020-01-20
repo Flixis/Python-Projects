@@ -1,3 +1,5 @@
+# !/usr/bin/python
+
 # Import QRCode from pyqrcode 
 import pyqrcode
 from pyqrcode import QRCode
@@ -9,8 +11,10 @@ init(wrap=False)
 stream = AnsiToWin32(sys.stderr).stream
 #import for CMD commands
 import os
+import platform
 
 #Version
+SystemOS = platform.system()
 Version = "1.0.0"
  
 # Check for QRnumerical to confirm int usage 
@@ -64,10 +68,16 @@ if __name__ == "__main__":
         if selection != 1:
             QRnumerical()
             #Open .svg with default app, windows only?
-            os.popen("Serial.svg")
+            if SystemOS == "Windows":
+                os.popen("Serial.svg")
+            else:
+                os.popen("Display Serial.svg")
         else:
             QRany()
             #Open .svg with default app, windows only?
-            os.popen("QR.svg")
+            if SystemOS == "Windows":
+                os.popen("QR.svg")
+            else
+                os.popen("Display QR.svg")
     except:
         print(Fore.RED + "I don't know how you did it, but you really fucked it this time." + Fore.RESET, file=stream)
