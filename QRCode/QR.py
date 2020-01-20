@@ -85,16 +85,16 @@ if __name__ == "__main__":
         else:
             QRnumerical()
             #Open .svg with default app, windows only?
-            if SystemOS == "1":
+            if SystemOS == "Windows":
                 os.popen("Serial.svg")
-            elif SystemOS == "1":
+            elif SystemOS == "Linux":
                 os.popen("display Serial.svg")
             else:
                 print("")
                 print(Fore.RED + "PROGRAM CRASHED!", file=stream)
                 print("---------------------------")
                 print("Debug:")
-                print(Fore.GREEN + "Module options: %r" % qr + Fore.RESET,file=stream)
+                print(Fore.GREEN + "Module options: %r" % serialqr + Fore.RESET,file=stream)
                 raise MyException("Couldn't match OS in order to display QRCode.")
     except ValueError:
                 print("")
