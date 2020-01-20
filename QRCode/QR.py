@@ -18,7 +18,6 @@ SystemOS = platform.system()
 VersionOS = platform.release()
 Version = "1.0.0"
 
-
  
 # Check for QRnumerical to confirm int usage 
 def inputnumber(number):
@@ -36,26 +35,27 @@ def inputnumber(number):
 def QRnumerical():
     print(Fore.RED + "Creating QR with numerical value only!" + Fore.RESET, file=stream)
     serial = inputnumber("SerialNumber:")
-    # Generate QR code 
+    # Generate QR code , we make the serialqr var global for debug access when program crashes.
+    global serialqr 
     serialqr = pyqrcode.create(serial)  
     # Create the QR code with the following settings and output to serial.svg
     print("Creating QRCode with SerialNumber %d" % serial)
     serialqr.svg("Serial.svg", scale = 8, background="white", module_color="black")
-    #debug code goes here:
-    print(Fore.GREEN + "Module options: %r" % serialqr + Fore.RESET,file=stream)
 
 #QRcode where anything goes
 def QRany():
     print(Fore.RED + "Creating QR with any value/string" + Fore.RESET, file=stream)
     message = ""
     message = input("String to encode:%s " % message)
-    # Generate QR code 
+    # Generate QR code , we make the qr var global for debug access when program crashes.
+    global qr 
     qr = pyqrcode.create(message)  
     # Create the QR code with the following settings and output to serial.svg
     print("Creating QRCode with %s" % message)
     qr.svg("QR.svg", scale = 8, background="white", module_color="black")
-    #debug code goes here:
-    print(Fore.GREEN + "Module options: %r" % qr + Fore.RESET,file=stream)
+
+class MyException(Exception):
+    pass
 
 #Start code
 if __name__ == "__main__":
@@ -64,23 +64,41 @@ if __name__ == "__main__":
     print("Please choose what kind of QRcode you want to create")
     print("1:Any Value")
     print("2:Numerical only")
+
     #Make sure selection is interger otherwise error
     try:
-        selection = None
-        selection = int(input())
-        if selection != 1:
-            QRnumerical()
-            #Open .svg with default app, windows only?
-            if SystemOS == "Windows":
-                os.popen("Serial.svg")
-            else:
-                 os.popen("display Serial.svg")
-        else:
+        selection = inputnumber("")
+        if selection == 1:
             QRany()
             #Open .svg with default app, windows only?
             if SystemOS == "Windows":
                 os.popen("QR.svg")
-            else:
+            elif SystemOS == "Linux":
                 os.popen("display QR.svg")
-    except:
-        print(Fore.RED + "I don't know how you did it, but you really fucked it this time." + Fore.RESET, file=stream)
+            else:
+                print("")
+                print(Fore.RED + "PROGRAM CRASHED!", file=stream)
+                print("---------------------------")
+                print("Debug:")
+                print(Fore.GREEN + "Module options: %r" % qr + Fore.RESET,file=stream)
+                raise MyException("Couldn't match OS in order to display QRCode.")
+        else:
+            QRnumerical()
+            #Open .svg with default app, windows only?
+            if SystemOS == "1":
+                os.popen("Serial.svg")
+            elif SystemOS == "1":
+                os.popen("display Serial.svg")
+            else:
+                print("")
+                print(Fore.RED + "PROGRAM CRASHED!", file=stream)
+                print("---------------------------")
+                print("Debug:")
+                print(Fore.GREEN + "Module options: %r" % qr + Fore.RESET,file=stream)
+                raise MyException("Couldn't match OS in order to display QRCode.")
+    except ValueError:
+                print("")
+                print(Fore.RED + "PROGRAM CRASHED!", file=stream)
+                print("---------------------------")
+                print("Debug:\n\r")
+                raise Exception
