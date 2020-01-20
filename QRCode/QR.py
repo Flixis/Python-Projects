@@ -15,7 +15,10 @@ import platform
 
 #Version
 SystemOS = platform.system()
+VersionOS = platform.release()
 Version = "1.0.0"
+
+
  
 # Check for QRnumerical to confirm int usage 
 def inputnumber(number):
@@ -57,7 +60,7 @@ def QRany():
 #Start code
 if __name__ == "__main__":
     #selection area:
-    print(Fore.LIGHTYELLOW_EX + "QRCode generator V%s\n\r" % Version + Fore.RESET , file=stream)
+    print(Fore.LIGHTYELLOW_EX + "QRCode generator V%s\n\r" % Version + "Running on %s %s" % (SystemOS, VersionOS) + Fore.RESET , file=stream)
     print("Please choose what kind of QRcode you want to create")
     print("1:Any Value")
     print("2:Numerical only")
@@ -71,13 +74,13 @@ if __name__ == "__main__":
             if SystemOS == "Windows":
                 os.popen("Serial.svg")
             else:
-                os.popen("Display Serial.svg")
+                 os.popen("display Serial.svg")
         else:
             QRany()
             #Open .svg with default app, windows only?
             if SystemOS == "Windows":
                 os.popen("QR.svg")
-            else
-                os.popen("Display QR.svg")
+            else:
+                os.popen("display QR.svg")
     except:
         print(Fore.RED + "I don't know how you did it, but you really fucked it this time." + Fore.RESET, file=stream)
