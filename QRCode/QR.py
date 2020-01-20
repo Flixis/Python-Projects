@@ -32,7 +32,7 @@ Version = "1.0.0"
 
 
  
-# Check for QRnumerical to confirm int usage 
+# Check to see if input is numerical only, used for QRnumerical and start of APP.
 def inputnumber(number):
     while True:
         try:
