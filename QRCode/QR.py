@@ -26,7 +26,7 @@ args = parser.parse_args()
 #Version and OS check
 SystemOS = platform.system()
 VersionOS = platform.release()
-Version = "1.0.0"
+Version = "1.1.0"
 
 
 
