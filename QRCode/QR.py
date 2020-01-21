@@ -17,10 +17,10 @@ import argparse
 
 
 
-# parser = argparse.ArgumentParser(description='Example: QR.py 1 Testing')
-# parser.add_argument('Type',type=int,help='Type 1 or 2.')
-# parser.add_argument('value',help="Data to encode.")
-# args = parser.parse_args()
+parser = argparse.ArgumentParser(description='Example: QR.py 1 Testing')
+parser.add_argument("-T","--Type",help="Example: Test string.",required=False,default="")
+parser.add_argument("-V","--Value",help="Example: Test string.",required=False,default="")
+args = parser.parse_args()
 
 
 #Version and OS check
