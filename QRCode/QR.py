@@ -42,7 +42,6 @@ def inputnumber(number):
             continue
         else:
             return userInput
-            break
 
 #QRcode with numerical value only
 def QRnumerical():
