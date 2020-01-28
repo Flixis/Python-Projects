@@ -17,16 +17,16 @@ import argparse
 
 
 
-# parser = argparse.ArgumentParser(description='Example: QR.py 1 Testing')
-# parser.add_argument('Type',type=int,help='Type 1 or 2.')
-# parser.add_argument('value',help="Data to encode.")
-# args = parser.parse_args()
+parser = argparse.ArgumentParser(description='Example: QR.py 1 Testing')
+parser.add_argument("-T","--Type",help="Example: Test string.",required=False,default="")
+parser.add_argument("-V","--Value",help="Example: Test string.",required=False,default="")
+args = parser.parse_args()
 
 
 #Version and OS check
 SystemOS = platform.system()
 VersionOS = platform.release()
-Version = "1.0.0"
+Version = "1.1.0"
 
 
 
@@ -42,7 +42,6 @@ def inputnumber(number):
             continue
         else:
             return userInput
-            break
 
 #QRcode with numerical value only
 def QRnumerical():
@@ -50,7 +49,7 @@ def QRnumerical():
     serial = inputnumber("SerialNumber:")
     # Generate QR code , we make the serialqr var global for debug access when program crashes.
     global serialqr 
-    serialqr = pyqrcode.create(serial)  
+    serialqr = pyqrcode.create(serial or args.Value)  
     # Create the QR code with the following settings and output to serial.svg
     print("Creating QRCode with SerialNumber %d" % serial)
     serialqr.svg("Serial.svg", scale = 8, background="white", module_color="black")
@@ -59,7 +58,7 @@ def QRnumerical():
 def QRany():
     print(Fore.RED + "Creating QR with any value/string" + Fore.RESET, file=stream)
     message = ""
-    message = input("String to encode:%s " % message)
+    message = input("String to encode:%s " % message or args.Value)
     # Generate QR code , we make the qr var global for debug access when program crashes.
     global qr 
     qr = pyqrcode.create(message)  
@@ -83,7 +82,7 @@ if __name__ == "__main__":
         selection = inputnumber("")
         
 
-        if selection == 1:
+        if selection and args.Type == 1:
             #QR with any string
             QRany()
             #Open .svg with default app, windows only?
@@ -98,7 +97,7 @@ if __name__ == "__main__":
                 print("Debug:")
                 print(Fore.GREEN + "Module options: %r" % qr + Fore.RESET,file=stream)
                 raise MyException("Couldn't match OS in order to display QRCode.")
-        else:
+        if selection and args.Type == 2:
             #QR with numerical only
             QRnumerical()
             #Open .svg with default app, windows only?
