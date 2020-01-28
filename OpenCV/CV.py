@@ -1,3 +1,5 @@
+# !/usr/bin/python
+#requires opencv2 and numpy
 import cv2
 import numpy as np
 
@@ -21,7 +23,7 @@ w, h = template.shape[::-1]
 #Set resolution
 res = cv2.matchTemplate(img_gray,template,cv2.TM_CCOEFF_NORMED)
 #Setting threshold for matching
-threshold = 0.72
+threshold = 0.5
 loc = np.where( res >= threshold)
 
 
