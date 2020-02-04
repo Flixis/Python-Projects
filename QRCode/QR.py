@@ -82,7 +82,7 @@ if __name__ == "__main__":
         selection = inputnumber("")
         
 
-        if selection and args.Type == 1:
+        if selection == 1:
             #QR with any string
             QRany()
             #Open .svg with default app, windows only?
@@ -97,7 +97,7 @@ if __name__ == "__main__":
                 print("Debug:")
                 print(Fore.GREEN + "Module options: %r" % qr + Fore.RESET,file=stream)
                 raise MyException("Couldn't match OS in order to display QRCode.")
-        if selection and args.Type == 2:
+        if selection == 2:
             #QR with numerical only
             QRnumerical()
             #Open .svg with default app, windows only?
