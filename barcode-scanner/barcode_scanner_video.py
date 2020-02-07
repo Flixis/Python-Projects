@@ -19,7 +19,9 @@ args = vars(ap.parse_args())
 # initialize the video stream and allow the camera sensor to warm up
 print("[INFO] starting video stream...")
 # vs = VideoStream(src=0).start()
-vs = VideoStream(usePiCamera=True).start()
+vs = VideoStream(usePiCamera=False, resolution=(1280,720),framerate=(32)).start()
+
+
 time.sleep(2.0)
 
 # open the output CSV file for writing and initialize the set of
@@ -36,6 +38,7 @@ while True:
 
 	# find the barcodes in the frame and decode each of the barcodes
 	barcodes = pyzbar.decode(frame)
+	
 
 	# loop over the detected barcodes
 	for barcode in barcodes:
