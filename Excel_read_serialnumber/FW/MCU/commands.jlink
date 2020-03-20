@@ -1,0 +1,9 @@
+exitonerror 1
+r
+h
+WaitHalt
+loadbin FullPackage.tmp.bin 0
+r0
+Sleep 20
+r1
+qc
