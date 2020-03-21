@@ -10,7 +10,7 @@ group.add_argument('-q','--quiet',action='store_true',help='App is quiet')
 group.add_argument('-v','--verbose',action='store_true',help='App is quiet')
 args = parser.parse_args()
 
-matasqr = 19011200020001
+matasqr = args.serial
 
 wb = load_workbook(filename = 'Workbook.xlsx')
 sheet = wb['Sheet1']
@@ -28,6 +28,9 @@ if __name__ == "__main__":
         print("Sheet names:")
         print(wb.sheetnames)
         print("Get Data from row 1 to 2:")
+        getdatafromcell()
+    elif args.serial:
+        print(args.serial)
         getdatafromcell()
     else:
         print("this is else")
