@@ -21,8 +21,8 @@ import os
 parser = argparse.ArgumentParser(description='Example: Excel.py 19011200020001')
 parser.add_argument("-s","--serial",metavar='',help="Serialnumber from Matas.",required=True)
 group = parser.add_mutually_exclusive_group()
-group.add_argument('-q','--quiet',action='store_true',help='App is quiet')
-group.add_argument('-v','--verbose',action='store_true',help='App is quiet')
+group.add_argument('-q','--quiet',action='store_true',help='App is running quiet')
+group.add_argument('-v','--verbose',action='store_true',help='App is running verbose')
 args = parser.parse_args()
 
 #----Arg mapping----#
