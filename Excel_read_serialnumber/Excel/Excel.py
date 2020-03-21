@@ -1,8 +1,19 @@
+'''
+██╗  ██╗ ██████╗ ████████╗██╗    ██╗ ██████╗ ██████╗ 
+╚██╗██╔╝██╔═══██╗╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗
+ ╚███╔╝ ██║   ██║   ██║   ██║ █╗ ██║██║   ██║██║  ██║
+ ██╔██╗ ██║   ██║   ██║   ██║███╗██║██║   ██║██║  ██║
+██╔╝ ██╗╚██████╔╝   ██║   ╚███╔███╔╝╚██████╔╝██████╔╝
+╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═════╝ 
+                                                     
+'''
+
 #----Imports----#
 from openpyxl import load_workbook
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
 import argparse
+import sys
 
 #----Arg parsing----#
 parser = argparse.ArgumentParser(description='Example: Excel.py 19011200020001')
@@ -33,13 +44,11 @@ def itterate():
 
 #----Find an empty cell and link the matasqr to it, return the value of the cell left of it----#
 def linkserial():
-    print("in itterate function")
     print("Using Serial: " + args.serial)
-    
     for cell in sheet["b"]:
         if cell.value is None:
-            print(cell.row)
-            print("Found empty cell, writing to it.")
+            if args.verbose:
+                print("Found empty cell %d, writing to it." % cell.row)
             sheet.cell(row=cell.row,column=2).value = matasqr
             break
     else:
@@ -50,15 +59,18 @@ def linkserial():
 if __name__ == "__main__":
     
     if args.quiet:
-        sheet.cell(row=3,column=2).value = matasqr
+        print("--Running Quiet--")
+        linkserial()
     elif args.verbose:
+        print("--Running Verbose--")
         print("Sheet names:")
         print(wb.sheetnames)
-        itterate()
+        linkserial()
     elif args.serial:
         linkserial()
     else:
-        print("this is else")
+        print("You broke it.")
+        sys.exit()
 
 
     #----Save changes to different .xlsx to prevent overriding data----#
