@@ -14,6 +14,7 @@ from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
 import argparse
 import sys
+import os
 
 #----Arg parsing----#
 parser = argparse.ArgumentParser(description='Example: Excel.py 19011200020001')
@@ -49,10 +50,14 @@ def linkserial():
         if cell.value is None:
             if args.verbose:
                 print("Found empty cell %d, writing to it." % cell.row)
+                print("Linked serial: %d " % sheet.cell(row=cell.row,column=1).value)
+            clientlink = sheet.cell(row=cell.row,column=1).value              
             sheet.cell(row=cell.row,column=2).value = matasqr
+            os.system('cmd /c "C:\Programming\python\Python-Projects\Excel_read_serialnumber\FW\MCU\FirmwareflashMCU_Serial.bat %d"' % clientlink)
             break
     else:
-        print (cell.row + 1)
+        print("Couldn't find empty cells... Exiting...")
+        sys.exit()
         
 
 #----Main----#
