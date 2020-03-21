@@ -23,21 +23,26 @@ row_count = sheet.max_row
 column_count = sheet.max_column
 
 #----Functions----#
+
+#----Itterate through all Rows and columns----#
 def itterate():
     for i in range(1,row_count+1):
         print(sheet.cell(row=i,column=1).value)
     for i in range(1,column_count+1):
         print(sheet.cell(row=1,column=i).value)
 
+#----Find an empty cell and link the matasqr to it, return the value of the cell left of it----#
 def linkserial():
     print("in itterate function")
     print("Using Serial: " + args.serial)
-    for i in range(1,row_count):
-        sheet.cell(row=i,column=2).value = matasqr
-    if sheet.cell is None:
-        print("Cell is empty")
-    else:
-        print("Cell contains data") 
+    for i in range(1,row_count+1):
+        if sheet.cell(row=i, column=2).value in [None,'']:
+            print("Found empty cell, writing to it.")
+            sheet.cell(row=i,column=2).value = matasqr
+        else:
+            print("Couldn't find an empty cell")
+            break
+        
 
 #----Main----#
 if __name__ == "__main__":
