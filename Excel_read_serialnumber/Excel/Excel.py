@@ -23,13 +23,13 @@ row_count = sheet.max_row
 column_count = sheet.max_column
 
 #----Functions----#
-def getdatafromcell():
+def itterate():
     for i in range(1,row_count+1):
         print(sheet.cell(row=i,column=1).value)
     for i in range(1,column_count+1):
         print(sheet.cell(row=1,column=i).value)
 
-def itterate():
+def linkserial():
     print("in itterate function")
     print("Using Serial: " + args.serial)
     for i in range(1,row_count):
@@ -47,9 +47,9 @@ if __name__ == "__main__":
     elif args.verbose:
         print("Sheet names:")
         print(wb.sheetnames)
-        getdatafromcell()
-    elif args.serial:
         itterate()
+    elif args.serial:
+        linkserial()
     else:
         print("this is else")
 
