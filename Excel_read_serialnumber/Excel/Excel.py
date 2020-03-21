@@ -43,7 +43,7 @@ def itterate():
     for i in range(1,column_count+1):
         print(sheet.cell(row=1,column=i).value)
 
-#----Find an empty cell and link the matasqr to it, return the value of the cell left of it----#
+#----Find an empty cell and link the matasqr to it, return the value of the cell left of it. Continue to execute programming with data from left row.----#
 def linkserial():
     print("Using Serial: " + args.serial)
     for cell in sheet["b"]:
