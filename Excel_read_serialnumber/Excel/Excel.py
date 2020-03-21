@@ -35,13 +35,15 @@ def itterate():
 def linkserial():
     print("in itterate function")
     print("Using Serial: " + args.serial)
-    for i in range(1,row_count+1):
-        if sheet.cell(row=i, column=2).value in [None,'']:
+    
+    for cell in sheet["b"]:
+        if cell.value is None:
+            print(cell.row)
             print("Found empty cell, writing to it.")
-            sheet.cell(row=i,column=2).value = matasqr
-        else:
-            print("Couldn't find an empty cell")
+            sheet.cell(row=cell.row,column=2).value = matasqr
             break
+    else:
+        print (cell.row + 1)
         
 
 #----Main----#
@@ -60,4 +62,4 @@ if __name__ == "__main__":
 
 
     #----Save changes to different .xlsx to prevent overriding data----#
-    wb.save('WorkbookPy.xlsx')
+    wb.save('Workbook.xlsx')
