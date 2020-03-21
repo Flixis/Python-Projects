@@ -31,8 +31,8 @@ matasqr = args.serial
 wb = load_workbook(filename = 'Workbook.xlsx')
 sheet = wb['Sheet1']
 sheet._number_formats = '0.00E+00'
-row_count = sheet.max_row
-column_count = sheet.max_column
+row_count = sheet.max_row + 1
+column_count = sheet.max_column + 1
 
 #----Functions----#
 
@@ -53,10 +53,11 @@ def linkserial():
                 print("Linked serial: %d " % sheet.cell(row=cell.row,column=1).value)
             clientlink = sheet.cell(row=cell.row,column=1).value              
             sheet.cell(row=cell.row,column=2).value = matasqr
+            print("Linked to: %d" % clientlink)
             os.system('cmd /c "C:\Programming\python\Python-Projects\Excel_read_serialnumber\FW\MCU\FirmwareflashMCU_Serial.bat %d"' % clientlink)
             break
     else:
-        print("Couldn't find empty cells... Exiting...")
+        print("Couldn't link serials... Exiting...")
         sys.exit()
         
 
@@ -70,6 +71,9 @@ if __name__ == "__main__":
         print("--Running Verbose--")
         print("Sheet names:")
         print(wb.sheetnames)
+        print("Row count: %d" % row_count)
+        print("Column count: %d " % column_count)
+        print("Sheet formatting: %s " % sheet._number_formats)
         linkserial()
     elif args.serial:
         linkserial()
