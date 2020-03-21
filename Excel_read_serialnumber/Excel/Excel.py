@@ -16,6 +16,8 @@ from openpyxl.utils import get_column_letter
 import argparse
 import sys
 import os
+import time
+timestr = time.strftime("%Y%m%d-%H%M%S")
 
 #----Arg parsing----#
 parser = argparse.ArgumentParser(description='Example: Excel.py 19011200020001')
@@ -75,6 +77,8 @@ if __name__ == "__main__":
         print("Row count: %d" % row_count)
         print("Column count: %d " % column_count)
         print("Sheet formatting: %s " % sheet._number_formats)
+        print('Saving to: Workbook.xlsx')
+        print('Creating Backup: Workbook %s.xlsx' % timestr)
         linkserial()
     elif args.serial:
         linkserial()
@@ -85,3 +89,4 @@ if __name__ == "__main__":
 
     #----Save changes to different .xlsx to prevent overriding data----#
     wb.save('Workbook.xlsx')
+    wb.save('Workbook %s.xlsx' % timestr)
