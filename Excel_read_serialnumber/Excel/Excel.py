@@ -52,8 +52,14 @@ def linkserial():
     for cell in sheet["b"]:
         if cell.value is None:
             if args.verbose:
-                print("Found empty cell %d, writing to it." % cell.row)
-                print("Linked serial: %d " % sheet.cell(row=cell.row,column=1).value)
+                try:
+                    print("Found empty cell %d, writing to it." % cell.row)
+                    print("Linked serial: %d " % sheet.cell(row=cell.row,column=1).value)
+                except TypeError:
+                    print("--ERROR--")
+                    print("No Serial found for linking, exiting.")
+                    print("--ERROR--")
+                    
             clientlink = sheet.cell(row=cell.row,column=1).value              
             sheet.cell(row=cell.row,column=2).value = matasqr
             print("Linked to: %d" % clientlink)
@@ -63,6 +69,18 @@ def linkserial():
         print("Couldn't link serials... Exiting...")
         sys.exit()
         
+def createbackupfolder():
+    path = "Backup/"
+    try:
+        if args.verbose and os.path.exists(path):
+            print("Path already exists")
+        elif os.path.exists(path):
+            print("")
+        else:
+            os.mkdir(path)
+    except OSError:
+        print ("Creation of the directory %s failed" % path)   
+
 
 #----Main----#
 if __name__ == "__main__":
@@ -77,9 +95,10 @@ if __name__ == "__main__":
         print("Row count: %d" % row_count)
         print("Column count: %d " % column_count)
         print("Sheet formatting: %s " % sheet._number_formats)
+        linkserial()
+        print('')
         print('Saving to: Workbook.xlsx')
         print('Creating Backup: Workbook %s.xlsx' % timestr)
-        linkserial()
     elif args.serial:
         linkserial()
     else:
@@ -88,5 +107,6 @@ if __name__ == "__main__":
 
 
     #----Save changes to different .xlsx to prevent overriding data----#
+    createbackupfolder()
     wb.save('Workbook.xlsx')
-    wb.save('Workbook %s.xlsx' % timestr)
+    wb.save("Backup\Workbook %s.xlsx" % timestr)
