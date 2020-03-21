@@ -6,7 +6,7 @@ import argparse
 
 #----Arg parsing----#
 parser = argparse.ArgumentParser(description='Example: Excel.py 19011200020001')
-parser.add_argument("-s","--serial",metavar='',help="Serialnumber from Matas.",required=False,default="")
+parser.add_argument("-s","--serial",metavar='',help="Serialnumber from Matas.",required=True)
 group = parser.add_mutually_exclusive_group()
 group.add_argument('-q','--quiet',action='store_true',help='App is quiet')
 group.add_argument('-v','--verbose',action='store_true',help='App is quiet')
@@ -19,14 +19,25 @@ matasqr = args.serial
 wb = load_workbook(filename = 'Workbook.xlsx')
 sheet = wb['Sheet1']
 sheet._number_formats = '0.00E+00'
-
+row_count = sheet.max_row
+column_count = sheet.max_column
 
 #----Functions----#
 def getdatafromcell():
-    for i in range(1,3):
-        sheet.cell(row=3,column=2).value = matasqr
-        print(sheet.cell(row=3,column=i).value)
+    for i in range(1,row_count+1):
+        print(sheet.cell(row=i,column=1).value)
+    for i in range(1,column_count+1):
+        print(sheet.cell(row=1,column=i).value)
 
+def itterate():
+    print("in itterate function")
+    print("Using Serial: " + args.serial)
+    for i in range(1,row_count):
+        sheet.cell(row=i,column=2).value = matasqr
+    if sheet.cell is None:
+        print("Cell is empty")
+    else:
+        print("Cell contains data") 
 
 #----Main----#
 if __name__ == "__main__":
@@ -36,11 +47,9 @@ if __name__ == "__main__":
     elif args.verbose:
         print("Sheet names:")
         print(wb.sheetnames)
-        print("Get Data from row 1 to 2:")
         getdatafromcell()
     elif args.serial:
-        print(args.serial)
-        getdatafromcell()
+        itterate()
     else:
         print("this is else")
 
