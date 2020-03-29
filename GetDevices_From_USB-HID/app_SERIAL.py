@@ -1,6 +1,7 @@
 #requires pyserial,colorama
 import sys
 import time
+import argparse
 #imports for serial
 import serial.tools.list_ports, serial 
 # colour libary
@@ -10,26 +11,37 @@ init(wrap=False)
 stream = AnsiToWin32(sys.stderr).stream
 
 
-#Print all serial devices and its requested items, note vid and pid print in interger not hex cba to fix it
-print(Fore.RED + "Note that VID and PID are printed as an interger! VID -> 3 , PID -> 4" + Fore.RESET, file=stream)
-print(Fore.MAGENTA + "                            VID   PID        " + Fore.RESET,file=stream)
+
+#----Arg parsing----#
+parser = argparse.ArgumentParser(description='Example: app_Serial.py -v 0403 -p 6001')
+parser.add_argument("-v","--VID",metavar='',help="Vendor ID.",required=True)
+parser.add_argument("-p","--PID",metavar='',help="Product ID.",required=True)
+args = parser.parse_args()
+
+
+print(Fore.YELLOW + "\nLooking for device with VID %s and PID %s" % (args.VID,args.PID) + Fore.RESET, file=stream)
+
+#Print all serial devices and its requested items.
 for port in serial.tools.list_ports.comports():
-        print(port.description, port.device, port.vid, port.pid)
+        portpid = ""
+        portvid = ""
+        if port.vid is None:
+            print("")
+        else:
+            portvid = hex(port.vid)
+            portpid = hex(port.pid)
+        print(port.description, port.device, portvid, portpid)
 
 print("\n")
 
-# Hardcoded versions
-#VID & PID Must be a HEX value
-VENDOR_ID = "0403"
-PRODUCT_ID = "6001"
-
+VENDOR_ID = args.VID
+PRODUCT_ID = args.PID
 
 #search in serial.tools for the following data and match it with the user given data
 def getSerialPort():
     for port in list(serial.tools.list_ports.comports()):
         if "USB VID:PID=%s:%s" % (VENDOR_ID, PRODUCT_ID) in port[2]:
             return port[0]
-
 
 if __name__ == "__main__":
     SerialPort = getSerialPort()
