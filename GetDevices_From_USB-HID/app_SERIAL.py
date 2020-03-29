@@ -14,10 +14,15 @@ stream = AnsiToWin32(sys.stderr).stream
 
 #----Arg parsing----#
 parser = argparse.ArgumentParser(description='Example: app_Serial.py -v 0403 -p 6001')
-parser.add_argument("-v","--VID",metavar='',help="Vendor ID.",required=True)
-parser.add_argument("-p","--PID",metavar='',help="Product ID.",required=True)
-args = parser.parse_args()
+parser.add_argument("-l","--LIST",metavar='',help="List all devices.")
+parser.add_argument("-v","--VID",metavar='',help="Vendor ID.")
+parser.add_argument("-p","--PID",metavar='',help="Product ID.")
+args = parser.parse_args() 
 
+
+if args.LIST:
+    print('not implemented yet.')
+    exit(1)
 
 print(Fore.YELLOW + "\nLooking for device with VID %s and PID %s" % (args.VID,args.PID) + Fore.RESET, file=stream)
 
@@ -37,7 +42,7 @@ print("\n")
 VENDOR_ID = args.VID
 PRODUCT_ID = args.PID
 
-#search in serial.tools for the following data and match it with the user given data
+#search in serial.tools for the following data and match it with the user given data.
 def getSerialPort():
     for port in list(serial.tools.list_ports.comports()):
         if "USB VID:PID=%s:%s" % (VENDOR_ID, PRODUCT_ID) in port[2]:
