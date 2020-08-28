@@ -17,6 +17,7 @@ import argparse
 import sys
 import os
 import time
+import serial
 timestr = time.strftime("%Y%m%d-%H%M%S")
 
 #----Arg parsing----#
@@ -36,6 +37,8 @@ sheet = wb['Sheet1']
 sheet._number_formats = '0.00E+00'
 row_count = sheet.max_row + 1
 column_count = sheet.max_column + 1
+
+
 
 #----Functions----#
 
@@ -59,11 +62,11 @@ def linkserial():
                     print("--ERROR--")
                     print("No Serial found for linking, exiting.")
                     print("--ERROR--")
-                    
             clientlink = sheet.cell(row=cell.row,column=1).value              
             sheet.cell(row=cell.row,column=2).value = matasqr
             print("Linked to: %d" % clientlink)
-            os.system('cmd /c "C:\Programming\python\Python-Projects\Excel_read_serialnumber\FW\MCU\FirmwareflashMCU_Serial.bat %d"' % clientlink)
+            #os.system(r'cmd /c "C:\Users\tariq\Downloads\Python-Projects-master\Excel_read_write_serialnumber\FW\MCU\FirmwareflashMCU_Serial.bat %d"' % clientlink)
+            return clientlink
             break
     else:
         print("Couldn't link serials... Exiting...")
@@ -85,6 +88,17 @@ def createbackupfolder():
 #----Main----#
 if __name__ == "__main__":
     
+    ser = serial.Serial()
+    ser.baudrate = 115200
+    ser.parity = serial.PARITY_NONE
+    ser.bytesize = serial.EIGHTBITS
+    ser.stopbits = serial.STOPBITS_ONE
+    ser.port = "COM254"
+    ser.open()
+    ser.flush()
+    
+    
+    
     if args.quiet:
         print("--Running Quiet--")
         linkserial()
@@ -99,6 +113,9 @@ if __name__ == "__main__":
         print('')
         print('Saving to: Workbook.xlsx')
         print('Creating Backup: Workbook %s.xlsx' % timestr)
+        #ser.write(linkserial())
+        #ser.flush()
+        print(linkserial())
     elif args.serial:
         linkserial()
     else:
