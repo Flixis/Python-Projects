@@ -19,23 +19,29 @@ args = parser.parse_args()
 
 logfile = fileinput.input([args.file])
 
-def get_shannon_memtest_fail() -> str:
+def get_shannon_memtest_fail(set_of_data:int) -> tuple:
+    
+    shannon_memtest_refdes_array = []
     for lines in logfile:
         if 'Shannon memtest failed' in lines:
             shannon_memtest_refdes_array = lines
-                    
-            return print(f"found keyword:{shannon_memtest_refdes_array.strip()}") #strip \n
-            
-            if 'RefDes: ' in lines:
-                #renaming lines to shannon_memtest_refdes_array for later use in code.
-                shannon_memtest_refdes_array = lines
-                #print(f"Keyword: {shannon_memtest_refdes_array}")
-                
+            #print(f"found keyword:{shannon_memtest_refdes_array.strip()}") #strip \n
+            count = 1
+            while count <= set_of_data:
+                print(shannon_memtest_refdes_array) 
+                count += 1  # This is the same as count = count + 1
+                if count >= set_of_data:
+                    return True
                 
 def get_test_result_data() -> str:
     for lines in logfile:
         if '- SN: ' in lines:
             print(f"found keyword: {lines.strip()}")
             
+            
+def generate_data_struct(shannonmemtest_fail:str , testresults:str) -> str:
+    
+    
+    pass
 
-get_test_result_data()
+print(get_shannon_memtest_fail(3))
