@@ -1,4 +1,4 @@
-File should look like output.txt
+bFile should look like output.txt
 
 parse file, look for "refdes".
 
@@ -10,6 +10,4 @@ End of file contains, SN, location, and result?
 
 what we need is, SN -> location -> refdes
 
-File is too large in text to normally loop though
-
-
+We could match SN location data to Array of shannonmemtest

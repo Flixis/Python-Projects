@@ -1,4 +1,5 @@
 import argparse
+import enum
 import os
 import fileinput
 
@@ -18,7 +19,23 @@ args = parser.parse_args()
 
 logfile = fileinput.input([args.file])
 
+def get_shannon_memtest_fail() -> str:
+    for lines in logfile:
+        if 'Shannon memtest failed' in lines:
+            shannon_memtest_refdes_array = lines
+                    
+            return print(f"found keyword:{shannon_memtest_refdes_array.strip()}") #strip \n
+            
+            if 'RefDes: ' in lines:
+                #renaming lines to shannon_memtest_refdes_array for later use in code.
+                shannon_memtest_refdes_array = lines
+                #print(f"Keyword: {shannon_memtest_refdes_array}")
+                
+                
+def get_test_result_data() -> str:
+    for lines in logfile:
+        if '- SN: ' in lines:
+            print(f"found keyword: {lines.strip()}")
+            
 
-for lines in logfile:
-    if 'Shannon memtest failed' in lines:
-        print(f"found keyword:{lines}")
+get_test_result_data()
