@@ -9,3 +9,7 @@ Above refdes there is a line that is the cause.
 End of file contains, SN, location, and result?
 
 what we need is, SN -> location -> refdes
+
+File is too large in text to normally loop though
+
+

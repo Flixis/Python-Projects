@@ -1,5 +1,6 @@
 import argparse
 import os
+import fileinput
 
 
 def dir_path(string):
@@ -15,10 +16,9 @@ parser = argparse.ArgumentParser(description='Example: app.py -f <log_to_scan>')
 parser.add_argument("-f","--file",metavar='',help="Log file to scan.",required=True, default=os.getcwd())
 args = parser.parse_args()
 
-logfile = args.file
+logfile = fileinput.input([args.file])
 
 
-
-with open(logfile) as f:
-    lines = f.read().split('\n')
-    print(lines)
+for lines in logfile:
+    if 'Shannon memtest failed' in lines:
+        print(f"found keyword:{lines}")
