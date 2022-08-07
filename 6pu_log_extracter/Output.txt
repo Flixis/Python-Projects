@@ -1,0 +1,24 @@
+22-26-826-455		Location: L0 	RefDes: U14000
+22-19-A2F-6HF		Location: L1	RefDes: U16006
+22-25-805-159		Location: L2	RefDes: U9006
+22-19-A2F-BTL		Location: L3	RefDes: U12006
+22-19-A2F-BUG		Location: L4	RefDes: U18005
+22-17-A2C-OFI		Location: L5 	ECC
+22-19-A2F-BRP		Location: L6 	RefDes: U18006
+22-28-893-525		Location: L7 	ECC
+22-20-852-360		Location: L8 	ECC
+22-16-A2B-WNH		Location: L9 	ECC
+22-06-A1Z-W5K		Location: L10 	RefDes: U12002
+22-05-A1Z-IQZ		Location: L11	ECC
+22-26-827-036		Location: L12	RefDes: U15002
+22-26-843-642		Location: L13	RefDes: U18006
+22-25-813-786		Location: L14	RefDes: U7005
+22-26-826-588		Location: L15	RefDes: U13005
+22-26-826-601		Location: L16	RefDes: U15005
+22-26-822-733		Location: L17	RefDes: U9000
+22-25-810-221		Location: L18	RefDes: U11002
+22-20-862-676		Location: L19	RefDes: U11000
+21-45-877-071		Location: L20	RefDes: U16008
+21-43-821-152		Location: L21 	ECC
+21-49-857-721		Location: L22 	RefDes: U18008
+22-20-856-871		Location: L23 	RefDes: U15005

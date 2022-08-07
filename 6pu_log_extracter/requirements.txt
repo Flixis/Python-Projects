@@ -1,0 +1,11 @@
+File should look like output.txt
+
+parse file, look for "refdes".
+
+
+
+Above refdes there is a line that is the cause.
+
+End of file contains, SN, location, and result?
+
+what we need is, SN -> location -> refdes
