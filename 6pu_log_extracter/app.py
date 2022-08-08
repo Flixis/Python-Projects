@@ -38,13 +38,11 @@ def get_test_result_data() -> str:
             #print(f"{SN_DUT}\n{LOCATION_DUT}\n{RESULT_DUT}")
         if 'TEST FAILURE Failure reason' in text:
             text.strip()
-            GET_LOCATION = text[text.find("L"):text.find("S")]
-            GET_LINE_NUMBER = logfile.filelineno()
-            SET_LINE_NUMBER = linecache.getline(args.file, (GET_LINE_NUMBER+1))
-            print(f"{GET_LOCATION}{GET_LINE_NUMBER}{SET_LINE_NUMBER}")
-            # logfile.readline(GET_LINE_NUMBER)
+            GET_LOCATION = text[text.find("L"):text.find("S")].strip()
+            GET_CURRENT_LINE_NUMBER = logfile.filelineno()
+            SET_LINE_NUMBER = linecache.getline(args.file, (GET_CURRENT_LINE_NUMBER+1)).strip()
+            REF_DES_ONLY = SET_LINE_NUMBER[SET_LINE_NUMBER.find("Ref"):len(SET_LINE_NUMBER)].strip()
+            print(f"{GET_LOCATION} {REF_DES_ONLY}")
             
-            
-
 get_test_result_data()
 fileinput.close()
