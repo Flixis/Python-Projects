@@ -19,24 +19,22 @@ args = parser.parse_args()
 
 logfile = fileinput.input([args.file])
 
-def get_shannon_memtest_fail(set_of_data:int) -> tuple:
+def get_shannon_memtest_fail() -> tuple:
     
     shannon_memtest_refdes_array = []
-    for lines in logfile:
-        if 'Shannon memtest failed' in lines:
-            shannon_memtest_refdes_array = lines
-            #print(f"found keyword:{shannon_memtest_refdes_array.strip()}") #strip \n
-            count = 1
-            while count <= set_of_data:
-                print(shannon_memtest_refdes_array) 
-                count += 1  # This is the same as count = count + 1
-                if count >= set_of_data:
-                    return True
+    for text in logfile:
+        if 'Shannon memtest failed' in text:
+            shannon_memtest_refdes_array = text
+            print(f"{shannon_memtest_refdes_array.strip()}") #strip \n
                 
 def get_test_result_data() -> str:
-    for lines in logfile:
-        if '- SN: ' in lines:
-            print(f"found keyword: {lines.strip()}")
+    for text in logfile:
+        if '- SN: ' in text:
+            text = text.replace("- ", "")
+            SN_DUT = text[0:text.find("Location")]#read till Location
+            LOCATION_DUT = text[text.find("Location"):text.find("PN")]
+            RESULT_DUT = text[text.find("Result"):len(text)]
+            print(f"{SN_DUT}\n{LOCATION_DUT}\n{RESULT_DUT}")
             
             
 def generate_data_struct(shannonmemtest_fail:str , testresults:str) -> str:
@@ -44,4 +42,4 @@ def generate_data_struct(shannonmemtest_fail:str , testresults:str) -> str:
     
     pass
 
-print(get_shannon_memtest_fail(3))
+get_test_result_data()
