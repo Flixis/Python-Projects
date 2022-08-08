@@ -23,19 +23,29 @@ with fileinput.input([args.file]) as logfile:
         for text in logfile:
             if '- SN: ' in text:
                 text.strip()
-                text = text.replace("- ", "")
-                SN_DUT = text[0:text.find("Location")]#read till Location
+                text = text.replace("- SN: ", "")
+                SN_DUT = text[0:text.find(" - Location")]#read till Location
                 LOCATION_DUT = text[text.find("Location"):text.find("PN")]
                 RESULT_DUT = text[text.find("Result"):len(text)]
-                print(f"{SN_DUT}\n{LOCATION_DUT}\n{RESULT_DUT}")
+                # print(f"{SN_DUT}\n{LOCATION_DUT}\n{RESULT_DUT}")
+                
+                serialized_data = {
+                    'SN' : [SN_DUT],
+                    'LOCATION':[LOCATION_DUT],
+                    'RESULT_DUT':[RESULT_DUT]                   
+                }
+                
+                tojson = json.dumps(serialized_data)
+                print(tojson)
+                
             elif 'TEST FAILURE Failure reason' in text:
                 text.strip()
                 GET_LOCATION = text[text.find("L"):text.find("S")].strip()
                 GET_CURRENT_LINE_NUMBER = logfile.filelineno()
                 SET_LINE_NUMBER = linecache.getline(args.file, (GET_CURRENT_LINE_NUMBER+1)).strip()
                 REF_DES_ONLY = SET_LINE_NUMBER[SET_LINE_NUMBER.find("Ref"):len(SET_LINE_NUMBER)].strip()
-                print(f"{GET_LOCATION} {REF_DES_ONLY}")
-                print(f"{SN_DUT}\n{LOCATION_DUT}\n{RESULT_DUT}\n{REF_DES_ONLY}")
+                # print(f"{GET_LOCATION} {REF_DES_ONLY}\n")
+                #print(f"{SN_DUT}\n{LOCATION_DUT}\n{RESULT_DUT}\n{REF_DES_ONLY}")
         if text is None:
             raise RuntimeError("Could not find keywords")
     get_test_result_data()
