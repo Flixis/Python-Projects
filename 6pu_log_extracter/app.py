@@ -2,6 +2,7 @@ import argparse
 import os
 import fileinput
 import linecache
+from tarfile import FIFOTYPE
 
 
 def dir_path(string):
@@ -20,8 +21,7 @@ args = parser.parse_args()
 
 
 
-
-REF_DES_ONLY , RESULT_DUT , GET_LOCATION , LOCATION_DUT , SN_DUT = "","","","",""
+FIFO_ARRAY_REFDES = []
 with fileinput.input([args.file]) as logfile:
     for text in logfile:
         text.strip()
@@ -30,6 +30,8 @@ with fileinput.input([args.file]) as logfile:
             GET_CURRENT_LINE_NUMBER = logfile.filelineno()
             SET_LINE_NUMBER = linecache.getline(args.file, (GET_CURRENT_LINE_NUMBER+1)).strip()
             REF_DES = SET_LINE_NUMBER[SET_LINE_NUMBER.find("Ref"):len(SET_LINE_NUMBER)].replace("RefDes: ","").strip()
+            if 'U' in REF_DES:
+                FIFO_ARRAY_REFDES.append(REF_DES)
         if '- SN: ' in text:
             SN_DUT = text[text.find("- SN: "):text.find(" - Location")].replace("- SN: ","")#read till Location
             LOCATION_DUT = text[text.find("Location:"):text.find("- PN")].replace("Location: ","")
