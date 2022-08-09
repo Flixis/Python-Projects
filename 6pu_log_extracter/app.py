@@ -2,8 +2,6 @@ import argparse
 import os
 import fileinput
 import linecache
-from tarfile import FIFOTYPE
-
 
 def dir_path(string):
     """
@@ -17,8 +15,6 @@ def dir_path(string):
 parser = argparse.ArgumentParser(description='Example: app.py -f <log_to_scan>')
 parser.add_argument("-f","--file",metavar='',help="Log file to scan.",required=False, default=os.getcwd())
 args = parser.parse_args()
-
-
 
 
 FIFO_ARRAY_REFDES = []
